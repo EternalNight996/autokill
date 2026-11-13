@@ -59,6 +59,28 @@ uses = ["next"]
 steps = "Use Next.js (App Router) + React + TypeScript, exported as a static site. Create the project files directly in app/: package.json with next, react and react-dom and the script \"build\": \"next build\"; next.config.mjs with output: 'export', trailingSlash: true and images: { unoptimized: true }; tsconfig.json; src/app/layout.tsx and src/app/page.tsx, with one folder per other page under src/app/. Load the original's fonts with next/font. Use nothing a static export can't serve (API routes, server actions, middleware, dynamic routes without generateStaticParams). Then run `npm install` and `npm run build` from app/ until it succeeds; the output must be app/out and must work when served as static files."
 
 [[stack]]
+name = "Vue 3 + TypeScript (Vite)"
+site = true
+asked_by = [" in vue ", " with vue ", " using vue ", " use vue ", " vue 3 ", " vue3 "]
+uses = ["vue"]
+needs = ["vite"]
+steps = "Use Vite + Vue 3 + TypeScript with <script setup>. Create the project files directly in app/ (package.json with scripts \"build\": \"vue-tsc -b && vite build\" or \"vite build\", vite.config.ts with base './' and the @vitejs/plugin-vue plugin, index.html with a #app mount point, src/main.ts and src/App.vue, one .vue file per part of the page). Then run `npm install` and `npm run build` from app/ until it succeeds; the output must be app/dist and must work when served as static files. For a route after the first page, use vue-router with createWebHashHistory so the export needs no server rewrites."
+
+[[stack]]
+name = "Astro"
+site = true
+asked_by = [" astro "]
+uses = ["astro"]
+steps = "Use Astro, built as a static site. Create the project files directly in app/ (package.json with scripts \"build\": \"astro build\", astro.config.mjs with output: 'static', src/pages/index.astro and one .astro file per other page, src/layouts/ for the shared shell, and the styles and scripts each page needs). Keep everything server-free: no server islands, no endpoints, no actions. Then run `npm install` and `npm run build` from app/ until it succeeds; the output must be app/dist with index.html at the top and each other page at its own path, and it must work when served as static files."
+
+[[stack]]
+name = "SvelteKit"
+site = true
+asked_by = [" sveltekit ", " svelte kit ", " in svelte ", " with svelte ", " using svelte "]
+uses = ["@sveltejs/kit"]
+steps = "Use SvelteKit with adapter-static, exported as a static site. Create the project files directly in app/ (package.json with scripts \"build\": \"vite build\", svelte.config.js using @sveltejs/adapter-static with pages: 'dist' and assets: 'dist', vite.config.ts with the sveltekit plugin, src/app.html, src/routes/+layout.ts with export const prerender = true and export const ssr = true, and src/routes/+page.svelte with one folder per other page). Use no server-only feature: no +page.server.ts, no form actions, no endpoints. Then run `npm install` and `npm run build` from app/ until it succeeds; the output must be app/dist with index.html at the top and each other page at its own path."
+
+[[stack]]
 name = "Python"
 asked_by = [" in python", " with python"]
 found_by = ["pyproject.toml", "requirements.txt", "setup.py"]

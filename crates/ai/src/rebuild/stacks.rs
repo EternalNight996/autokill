@@ -177,9 +177,11 @@ mod tests {
         assert_eq!(found(&[("package.json", vite), ("index.html", "")]), Some("React + TypeScript (Vite)"));
         assert_eq!(
             found(&[("package.json", r#"{"dependencies":{"vue":"3"},"devDependencies":{"vite":"7"}}"#)]),
-            Some(BUILDERS_CHOICE),
-            "Vite alone isn't React"
+            Some("Vue 3 + TypeScript (Vite)"),
+            "vue with Vite is the Vue stack"
         );
+        assert_eq!(found(&[("package.json", r#"{"dependencies":{"astro":"5"}}"#)]), Some("Astro"));
+        assert_eq!(found(&[("package.json", r#"{"dependencies":{"@sveltejs/kit":"2"}}"#)]), Some("SvelteKit"));
         assert_eq!(found(&[("package.json", r#"{"dependencies":{"svelte":"5"}}"#), ("index.html", "")]), Some(BUILDERS_CHOICE));
         assert_eq!(found(&[("Cargo.toml", "[dependencies]\neframe = \"0.30\"\n")]), Some("Rust + egui (eframe)"));
         assert_eq!(found(&[("Cargo.toml", "[dependencies]\nmacroquad = \"0.4\"\n")]), Some("Rust + macroquad"));
@@ -258,6 +260,8 @@ mod tests {
         std::fs::write(d.path().join("package.json"), r#"{"devDependencies": {"vite": "7"}}"#).unwrap();
         assert_eq!(used_in(d.path()).map(|s| s.name.as_str()), Some("React + TypeScript (Vite)"));
         std::fs::write(d.path().join("package.json"), r#"{"dependencies": {"astro": "5"}}"#).unwrap();
+        assert_eq!(used_in(d.path()).map(|s| s.name.as_str()), Some("Astro"));
+        std::fs::write(d.path().join("package.json"), r#"{"dependencies": {"solid-js": "1"}}"#).unwrap();
         assert!(used_in(d.path()).is_none(), "a stack the table doesn't know stays the builder's choice");
         assert_eq!(libraries_for("use shadcn", BUILDERS_CHOICE).len(), 1, "a library works with the builder's choice too");
     }
